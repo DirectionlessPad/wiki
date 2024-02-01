@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    {% if filename in entries %}
+        <h1>
+            Error, an entry titled {{filename}} already exists.
+        </h1>
+        <li>
+            <a href="{% url 'title' entry_name=filename %}">{{ filename }}</a>
+        </li>
+    {% else %}
+        <form action="{% url 'create_new_page' %}" method="post">
+            {% csrf_token %}
+            {{ content }}
+            <input type="submit" value="Save"/>
+        </form>
+    {% endif %}
+
+{% endblock %}
